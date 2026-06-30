@@ -1,0 +1,3 @@
+com\example\springmocking\service\UserServiceTest.class
+com\example\springmocking\controller\UserControllerTest.class
+com\example\springmocking\UserIntegrationTest.class

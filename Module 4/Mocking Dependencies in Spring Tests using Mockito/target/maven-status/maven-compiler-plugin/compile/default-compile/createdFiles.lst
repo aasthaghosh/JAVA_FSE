@@ -1,0 +1,5 @@
+com\example\springmocking\controller\UserController.class
+com\example\springmocking\service\UserService.class
+com\example\springmocking\repository\UserRepository.class
+com\example\springmocking\SpringMockingApplication.class
+com\example\springmocking\model\User.class

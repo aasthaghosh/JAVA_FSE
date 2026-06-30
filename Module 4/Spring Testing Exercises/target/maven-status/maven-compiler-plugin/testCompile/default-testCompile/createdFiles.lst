@@ -1,0 +1,5 @@
+com\example\springtesting\UserIntegrationTest.class
+com\example\springtesting\service\CalculatorServiceTest.class
+com\example\springtesting\service\UserServiceTest.class
+com\example\springtesting\controller\UserControllerTest.class
+com\example\springtesting\repository\UserRepositoryTest.class
