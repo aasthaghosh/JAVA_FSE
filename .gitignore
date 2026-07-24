@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.vite/
+target/
+.idea/
+.vscode/
+*.class
+*.jar
+*.war
+.classpath
+.project
+.settings/
+bin/
+.DS_Store
