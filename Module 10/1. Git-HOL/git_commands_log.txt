@@ -1,0 +1,67 @@
+===================================================================
+1. Git-HOL Execution Log
+===================================================================
+
+Step 1: Check Git Client & User Configuration
+-------------------------------------------------------------------
+$ git --version
+git version 2.53.0.windows.2
+
+$ git config --global user.name "Sunil Kumar"
+$ git config --global user.email "sunilbawania4002@gmail.com"
+
+$ git config --global --list
+user.name=Sunil Kumar
+user.email=sunilbawania4002@gmail.com
+core.editor='C:/Program Files/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noPlugin
+
+Step 2: Notepad++ Integration & Default Editor Setup
+-------------------------------------------------------------------
+$ git config --global core.editor "'C:/Program Files/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noPlugin"
+$ git config --global -e
+
+Step 3: Source Code Repository Workflow (GitDemo)
+-------------------------------------------------------------------
+$ git init GitDemo
+Initialized empty Git repository in C:/Users/NELAESH/OneDrive/Desktop/Cognizant/GIT/1. Git-HOL/GitDemo/.git/
+
+$ cd GitDemo
+$ Get-ChildItem -Force
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d--h--        20-07-2026     12:43                .git
+
+$ echo "Welcome to Git Learning Hands-on Lab" > welcome.txt
+$ cat welcome.txt
+Welcome to Git Learning Hands-on Lab
+
+$ git status
+On branch master
+No commits yet
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	welcome.txt
+
+$ git add welcome.txt
+$ git commit -m "Initial commit: Add welcome.txt with welcome message"
+[master (root-commit) 8a641ce] Initial commit: Add welcome.txt with welcome message
+ 1 file changed, 1 insertion(+)
+ create mode 100644 welcome.txt
+
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+$ git log
+commit 8a641cebc46f33e00dff0a10a21afdbe729b0d50
+Author: Sunil Kumar <sunilbawania4002@gmail.com>
+Date:   Mon Jul 20 12:43:36 2026 +0530
+
+    Initial commit: Add welcome.txt with welcome message
+
+Step 4: Remote Pull and Push Operations Reference
+-------------------------------------------------------------------
+$ git remote add origin https://github.com/sunilkumar0004/Cognizant.git
+$ git pull origin master
+$ git push origin master
+===================================================================

@@ -1,0 +1,84 @@
+===================================================================
+3. Git-HOL Execution Log
+===================================================================
+
+Step 1: Initialize Local Repository & Master Commit
+-------------------------------------------------------------------
+$ git init GitDemo
+Initialized empty Git repository in C:/Users/NELAESH/OneDrive/Desktop/Cognizant/GIT/3. Git-HOL/GitDemo/.git/
+
+$ echo "Initial content on master branch" > main.txt
+$ git add main.txt
+$ git commit -m "Initial commit on master branch"
+[master (root-commit) daa0762] Initial commit on master branch
+ 1 file changed, 1 insertion(+)
+ create mode 100644 main.txt
+
+Step 2: Create & List Branch (GitNewBranch)
+-------------------------------------------------------------------
+$ git branch GitNewBranch
+$ git branch -a
+  GitNewBranch
+* master
+
+Step 3: Switch Branch, Add Changes & Commit
+-------------------------------------------------------------------
+$ git checkout GitNewBranch
+Switched to branch 'GitNewBranch'
+
+$ echo "New feature implementation on GitNewBranch" > feature.txt
+$ git add feature.txt
+$ git commit -m "Add feature.txt on GitNewBranch"
+[GitNewBranch 222fa29] Add feature.txt on GitNewBranch
+ 1 file changed, 1 insertion(+)
+ create mode 100644 feature.txt
+
+$ git status
+On branch GitNewBranch
+nothing to commit, working tree clean
+
+Step 4: Switch to Master & View CLI Diff
+-------------------------------------------------------------------
+$ git checkout master
+Switched to branch 'master'
+
+$ git diff master GitNewBranch
+diff --git a/feature.txt b/feature.txt
+new file mode 100644
+index 0000000..a646760
+--- /dev/null
++++ b/feature.txt
+@@ -0,0 +1 @@
++New feature implementation on GitNewBranch
+
+Step 5: Visual Diff Tool Configuration (P4Merge)
+-------------------------------------------------------------------
+$ git config --global diff.tool p4merge
+$ git config --global difftool.p4merge.cmd '"C:/Program Files/Perforce/p4merge.exe" "$LOCAL" "$REMOTE"'
+$ git difftool master GitNewBranch
+
+Step 6: Merge Branch into Master & Observe Graph Log
+-------------------------------------------------------------------
+$ git merge GitNewBranch
+Updating daa0762..222fa29
+Fast-forward
+ feature.txt | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 feature.txt
+
+$ git log --oneline --graph --decorate
+* 222fa29 (HEAD -> master, GitNewBranch) Add feature.txt on GitNewBranch
+* daa0762 Initial commit on master branch
+
+Step 7: Delete Merged Branch & Verify Status
+-------------------------------------------------------------------
+$ git branch -d GitNewBranch
+Deleted branch GitNewBranch (was 222fa29).
+
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+$ git branch
+* master
+===================================================================

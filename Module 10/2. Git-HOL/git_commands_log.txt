@@ -1,0 +1,71 @@
+===================================================================
+2. Git-HOL Execution Log
+===================================================================
+
+Step 1: Local Repository Initialization
+-------------------------------------------------------------------
+$ git init GitDemo
+Initialized empty Git repository in C:/Users/NELAESH/OneDrive/Desktop/Cognizant/GIT/2. Git-HOL/GitDemo/.git/
+
+Step 2: Create Source & Unwanted Log Files
+-------------------------------------------------------------------
+$ echo 'print("Hello World Git Ignore Lab")' > main.py
+$ echo '[INFO] Server started on port 8080' > app.log
+$ mkdir log
+$ echo '[DEBUG] Database connection' > log/system.log
+
+Step 3: Status Before .gitignore Configuration
+-------------------------------------------------------------------
+$ git status
+On branch master
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	app.log
+	log/
+	main.py
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+Step 4: Create & Configure .gitignore
+-------------------------------------------------------------------
+$ cat .gitignore
+# Ignore all .log extension files
+*.log
+
+# Ignore the log directory
+log/
+
+Step 5: Status After .gitignore Configuration (Verification)
+-------------------------------------------------------------------
+$ git status
+On branch master
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	.gitignore
+	main.py
+
+(Notice: app.log and log/ are successfully ignored!)
+
+Step 6: Stage and Commit Tracked Files
+-------------------------------------------------------------------
+$ git add .gitignore main.py
+$ git commit -m "Initial commit: Add main.py and .gitignore to ignore log files and log directory"
+[master (root-commit) 4af4aed] Initial commit: Add main.py and .gitignore to ignore log files and log directory
+ 2 files changed, 6 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100644 main.py
+
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+Step 7: Check-Ignore Verification
+-------------------------------------------------------------------
+$ git check-ignore -v app.log log/system.log
+.gitignore:2:*.log	app.log
+.gitignore:5:log/	log/system.log
+===================================================================

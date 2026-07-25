@@ -1,0 +1,133 @@
+===================================================================
+4. Git-HOL Execution Log
+===================================================================
+
+Step 1: Initialize Local Repository & Clean Master State
+-------------------------------------------------------------------
+$ git init GitDemo
+Initialized empty Git repository in C:/Users/NELAESH/OneDrive/Desktop/Cognizant/GIT/4. Git-HOL/GitDemo/.git/
+
+$ echo "Initial commit on master" > init.txt
+$ git add init.txt
+$ git commit -m "Initial commit on master"
+[master (root-commit) a25cd62] Initial commit on master
+ 1 file changed, 1 insertion(+)
+ create mode 100644 init.txt
+
+Step 2 & 3: Create Branch GitWork & Add hello.xml
+-------------------------------------------------------------------
+$ git checkout -b GitWork
+Switched to a new branch 'GitWork'
+
+$ cat << 'EOF' > hello.xml
+<greeting>
+    <message>Hello World from GitWork Branch</message>
+</greeting>
+EOF
+
+$ git add hello.xml
+$ git commit -m "Add hello.xml on GitWork branch"
+[GitWork 8f59762] Add hello.xml on GitWork branch
+ 1 file changed, 3 insertions(+)
+ create mode 100644 hello.xml
+
+$ git status
+On branch GitWork
+nothing to commit, working tree clean
+
+Step 4 & 5: Switch to Master & Add Conflicting hello.xml
+-------------------------------------------------------------------
+$ git checkout master
+Switched to branch 'master'
+
+$ cat << 'EOF' > hello.xml
+<greeting>
+    <message>Hello World from Master Branch</message>
+</greeting>
+EOF
+
+$ git add hello.xml
+$ git commit -m "Add hello.xml on master branch"
+[master 9b6c8ed] Add hello.xml on master branch
+ 1 file changed, 3 insertions(+)
+ create mode 100644 hello.xml
+
+Step 6: Observe Graph Log & Diff Before Merge
+-------------------------------------------------------------------
+$ git log --oneline --graph --decorate --all
+* 9b6c8ed (HEAD -> master) Add hello.xml on master branch
+| * 8f59762 (GitWork) Add hello.xml on GitWork branch
+|/  
+* a25cd62 Initial commit on master
+
+$ git diff master GitWork
+diff --git a/hello.xml b/hello.xml
+index 6ac8696..4cd6d1d 100644
+--- a/hello.xml
++++ b/hello.xml
+@@ -1,3 +1,3 @@
+ <greeting>
+-    <message>Hello World from Master Branch</message>
++    <message>Hello World from GitWork Branch</message>
+ </greeting>
+
+Step 7: Trigger Merge Conflict
+-------------------------------------------------------------------
+$ git merge GitWork
+Auto-merging hello.xml
+CONFLICT (add/add): Merge conflict in hello.xml
+Automatic merge failed; fix conflicts and then commit the result.
+
+Step 8: Observe Conflict Markup in hello.xml
+-------------------------------------------------------------------
+$ cat hello.xml
+<greeting>
+<<<<<<< HEAD
+    <message>Hello World from Master Branch</message>
+=======
+    <message>Hello World from GitWork Branch</message>
+>>>>>>> GitWork
+</greeting>
+
+Step 9: Resolve Conflict, Update .gitignore & Commit
+-------------------------------------------------------------------
+$ cat << 'EOF' > hello.xml
+<greeting>
+    <message>Hello World from Master Branch - Merged with GitWork</message>
+</greeting>
+EOF
+
+$ cat << 'EOF' > .gitignore
+# Ignore P4Merge backup files
+*.orig
+EOF
+
+$ git add hello.xml .gitignore
+$ git commit -m "Merge branch GitWork: resolved conflict in hello.xml"
+[master 3c710f8] Merge branch GitWork: resolved conflict in hello.xml
+
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+Step 10: Delete Branch & Inspect Graph Log
+-------------------------------------------------------------------
+$ git branch -a
+  GitWork
+* master
+
+$ git branch -d GitWork
+Deleted branch GitWork (was 8f59762).
+
+$ git log --oneline --graph --decorate
+*   3c710f8 (HEAD -> master) Merge branch GitWork: resolved conflict in hello.xml
+|\  
+| * 8f59762 Add hello.xml on GitWork branch
+* | 9b6c8ed Add hello.xml on master branch
+|/  
+* a25cd62 Initial commit on master
+
+$ git status
+On branch master
+nothing to commit, working tree clean
+===================================================================
